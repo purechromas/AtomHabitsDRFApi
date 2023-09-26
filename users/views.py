@@ -70,8 +70,8 @@ class UserEmailVerificationAPIView(APIView):
     - 400 Bad Request: Missing 'verification_number' query parameter.
     - 404 Not Found: 'verification_number' does not match any user profile.
     """
-
-    def get(self, request):
+    @staticmethod
+    def get(request):
         verification_number = request.GET.get('verification_number')
 
         if not verification_number:

@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -31,6 +32,9 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_celery_beat',
+    'corsheaders',
+    'drf_yasg',
 
     'users.apps.UsersConfig',
     'habits.apps.HabitsConfig',
@@ -44,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -123,6 +128,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
+# REST_FRAMEWORK SETTINGS
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+# AUTHENTICATED BY JSON WEB TOKEN (JWT)
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(weeks=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(weeks=1),
+}
+
 # CELERY SETTINGS
 
 CELERY_BROKER_URL = 'redis://localhost:6379'  # /1
@@ -130,6 +153,15 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'  # /2
 CELERY_TIMEZONE = 'UTC'
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
+
+# CELERY BEAT SETTINGS
+
+CELERY_BEAT_SCHEDULE = {
+    # 'task-name': {
+    #     'task': 'task.path',
+    #     'schedule': timedelta(days=1),
+    # },
+}
 
 # EMAIL SETTINGS
 
@@ -140,3 +172,15 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# CORS (Cross-Origin Resource Sharing)
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8000',  # Frontend 'http://localhost:8000'
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000', #  Frontend + Backend
+]
+
+CORS_ALLOW_ALL_ORIGINS = False
