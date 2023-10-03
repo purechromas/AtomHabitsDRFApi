@@ -1,6 +1,8 @@
 import os
 from datetime import timedelta
 from pathlib import Path
+
+from celery.schedules import crontab
 from dotenv import load_dotenv
 
 # Loading all .env variables
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
 
     'users.apps.UsersConfig',
     'habits.apps.HabitsConfig',
+    'bots.apps.BotsConfig',
 ]
 
 MIDDLEWARE = [
@@ -141,10 +144,16 @@ REST_FRAMEWORK = {
 
 # AUTHENTICATED BY JSON WEB TOKEN (JWT)
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(weeks=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(weeks=1),
-}
+if DEBUG:
+    SIMPLE_JWT = {
+        'ACCESS_TOKEN_LIFETIME': timedelta(weeks=1),
+        'REFRESH_TOKEN_LIFETIME': timedelta(weeks=1),
+    }
+else:
+    SIMPLE_JWT = {
+        'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+        'REFRESH_TOKEN_LIFETIME': timedelta(hours=1),
+    }
 
 # CELERY SETTINGS
 
@@ -157,21 +166,24 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 # CELERY BEAT SETTINGS
 
 CELERY_BEAT_SCHEDULE = {
-    # 'task-name': {
-    #     'task': 'task.path',
-    #     'schedule': timedelta(days=1),
-    # },
+    'send_telegram_habit_notification': {
+        'task': 'habits.tasks.send_habit_telegram_notification',
+        'schedule': crontab(minute='*'),
+    },
 }
 
 # EMAIL SETTINGS
 
-EMAIL_USE_SSL = True
-EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = os.getenv('EMAIL_PORT')
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+else:
+    EMAIL_USE_SSL = True
+    EMAIL_HOST = os.getenv('EMAIL_HOST')
+    EMAIL_PORT = os.getenv('EMAIL_PORT')
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 # CORS (Cross-Origin Resource Sharing)
 
@@ -184,3 +196,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False
+
+# TELEGRAM BOT SETTINGS
+
+TELEGRAM_BOT_TOKEN=os.getenv('TELEGRAM_BOT_TOKEN')

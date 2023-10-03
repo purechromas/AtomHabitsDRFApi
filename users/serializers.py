@@ -29,4 +29,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user.save()
 
         return Response(
-            {'message': 'Registration was successful. Check your email for verification.'}, status=status.HTTP_201_CREATED)
+            {'message': 'Registration was successful. Check your email for verification.'},
+            status=status.HTTP_201_CREATED
+        )

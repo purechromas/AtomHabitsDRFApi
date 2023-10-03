@@ -17,11 +17,11 @@ class Habit(models.Model):
     frequency = models.CharField(
         _('Frequency'), choices=Frequency.choices, default=Frequency.DAILY, max_length=10
     )
-    time_complete = models.PositiveIntegerField(_('Time complete'), **NULLABLE)  # How much time we need for the habit
+    time_complete = models.PositiveIntegerField(_('Time complete'))  # How much time we need for the habit
     is_public = models.BooleanField(_('Is public'), default=True)
 
     reward = models.CharField(_('Reward'), max_length=255, **NULLABLE)  # reward or pleasant_habit
-    pleasant_habit = models.ForeignKey('self', on_delete=models.CASCADE, related_name='pleasant_habits', **NULLABLE)
+    related_habit = models.ForeignKey('self', on_delete=models.CASCADE,  related_name='related_habits', **NULLABLE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='habits')
 
 

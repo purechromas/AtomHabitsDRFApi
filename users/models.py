@@ -13,6 +13,8 @@ class User(AbstractUser):
     town = models.CharField(_('Town'), max_length=50, **NULLABLE)
     is_verified = models.BooleanField(_('Is verified'), default=False)
     verification_number = models.PositiveIntegerField(_('Verification number'), **NULLABLE)
+    telegram_chat_id = models.BigIntegerField(_('Telegram Chat ID'), **NULLABLE)
+
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

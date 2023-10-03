@@ -31,7 +31,8 @@ class TestUserRegistrationCreateAPIView(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(
-            response.json(), {'message': 'Registration was successful. Check your email for verification.'}
+            response.json(),
+            {'message': 'Registration was successful. Check your email for verification.'}
         )
 
 
