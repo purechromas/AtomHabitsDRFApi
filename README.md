@@ -56,8 +56,8 @@ Follow these steps to run the API on your local machine:
 6. **Start Celery and Celery Beat**: Start Celery and Celery Beat for background task processing.
 
     ```bash
-    celery -A yourprojectname worker --loglevel=info
-    celery -A yourprojectname beat --loglevel=info
+    celery -A config worker --loglevel=info
+    celery -A config beat --loglevel=info
     ```
 
     Replace `yourprojectname` with the name of your Django project.
