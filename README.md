@@ -31,7 +31,9 @@ Follow these steps to run the API on your local machine:
     cd atomic-habit-api
     ```
 
-2. **Configure Your Environment**: Create a `.env` file by copying the provided `.env-example`. This file should contain sensitive information such as database settings, email configurations, and any required API keys.
+2. **Create a Virtual Environment**: Before configuring the environment, it's a good practice to create a virtual environment using tools like Poetry or venv to isolate your project dependencies.
+
+3. **Configure Your Environment**: Create a `.env` file by copying the provided `.env-example`. This file should contain sensitive information such as database settings, email configurations, and any required API keys.
 
     ```bash
     .env-example -> .env
@@ -39,19 +41,19 @@ Follow these steps to run the API on your local machine:
 
     Edit the `.env` file and fill in the necessary values.
 
-3. **Database Migration**: Migrate the database to create the required tables.
+4. **Database Migration**: Migrate the database to create the required tables.
 
     ```bash
     ./manage.py migrate
     ```
 
-4. **Start the Telegram Bot**: Run the Telegram bot to receive habit reminders. You can access the Telegram bot [here](https://t.me/AtomHabitsBot).
+5. **Start the Telegram Bot**: Run the Telegram bot to receive habit reminders. You can access the Telegram bot [here](https://t.me/AtomHabitsBot).
 
     ```bash
     ./manage.py runtelegrambot
     ```
 
-5. **Start Celery and Celery Beat**: Start Celery and Celery Beat for background task processing.
+6. **Start Celery and Celery Beat**: Start Celery and Celery Beat for background task processing.
 
     ```bash
     celery -A yourprojectname worker --loglevel=info
@@ -60,12 +62,10 @@ Follow these steps to run the API on your local machine:
 
     Replace `yourprojectname` with the name of your Django project.
 
-6. **Start the Server**: Finally, start the development server.
+7. **Start the Server**: Finally, start the development server.
 
     ```bash
     ./manage.py runserver
     ```
 
     You can now access the API at `http://localhost:8000` in your web browser or use a tool like Postman to interact with it.
-
-
