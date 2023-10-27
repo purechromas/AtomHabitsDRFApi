@@ -18,9 +18,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -80,11 +80,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'NAME': os.getenv('DB_NAME'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'NAME': os.getenv('POSTGRES_DB'),
+        'PORT': os.getenv('POSTGRES_PORT'),
+        'HOST': 'postgresql',
     }
 }
 
@@ -121,6 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -157,8 +158,8 @@ else:
 
 # CELERY SETTINGS
 
-CELERY_BROKER_URL = 'redis://localhost:6379'  # /1
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'  # /2
+CELERY_BROKER_URL = 'redis://redis:6379'  # /1
+CELERY_RESULT_BACKEND = 'redis://redis:6379'  # /2
 CELERY_TIMEZONE = 'UTC'
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
@@ -192,11 +193,11 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:8000', #  Frontend + Backend
+    'http://localhost:8000',  # Frontend + Backend
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False
 
 # TELEGRAM BOT SETTINGS
 
-TELEGRAM_BOT_TOKEN=os.getenv('TELEGRAM_BOT_TOKEN')
+TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
