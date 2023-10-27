@@ -62,7 +62,7 @@ services:
     command: celery -A config worker -l INFO
     depends_on:
       drf_gunicorn:
-        condition: service_started
+        condition: service_healthy
 
   celery_beat:
     build: .
@@ -71,4 +71,4 @@ services:
     command: celery -A config beat -l INFO -S django
     depends_on:
       drf_gunicorn:
-        condition: service_started
+        condition: service_healthy
