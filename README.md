@@ -22,15 +22,11 @@ Enjoy tracking your habits and achieving your goals!
 
 ## Easy RUN by docker:
 
-# Docker Image for Your Python Application
-
-This Docker image is designed to run your Python application using Python 3.11 on a slim Debian-based image.
-
 ## Building the Docker Image
 
 1. Make sure you have Docker installed on your system. If not, you can download and install it from the [Docker website](https://www.docker.com/get-started).
 
-2. Clone the repository containing the Dockerfile and your application code if you haven't already.
+2. Clone the repository in your local machine and open it with IDE for example -> PYCharm or VSCode
 
 3. Open a terminal and navigate to the directory where your Dockerfile is located.
 
@@ -42,9 +38,9 @@ This Docker image is designed to run your Python application using Python 3.11 o
 
 5. Build the Docker image using the following command:
    ```shell
-   docker-compose build 
-   docker-compose up
+   docker-compose -f docker-compose-local.yml up
 
+6. Done you can open [localhost](http://localhost).
 
 ## Hard RUN
 
