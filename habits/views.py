@@ -14,7 +14,10 @@ class HabitViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsOwnerCRUD]
 
     def get_queryset(self):
-        self.queryset = Habit.objects.filter(creator=self.request.user)
+        if self.action == 'list':
+            self.queryset = Habit.objects.filter(creator=self.request.user)
+        else:
+            self.queryset = Habit.objects.all()
         return self.queryset
 
 
