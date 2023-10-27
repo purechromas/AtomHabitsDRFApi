@@ -24,7 +24,7 @@ RUN apt-get update -y && apt-get upgrade -y
 
 FROM updating-and-upgrading-linux AS installing-packages
 
-RUN apt-get install -y libpq-dev && apt-get install -y celery && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+RUN apt-get install -y libpq-dev && apt-get install -y celery  && apt-get install -y curl && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 FROM installing-packages AS installing-project-dependencies
 
